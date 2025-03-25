@@ -57,7 +57,7 @@ export default function Landing() {
                     actionable insights.
                   </p>
                   <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <Button asChild size="lg" className="rounded-full">
+                    <Button asChild size="lg" className="rounded-full bg-white/10 text-white border-white/20 hover:bg-white/20">
                       <Link href="/login">Login</Link>
                     </Button>
                     <Button
