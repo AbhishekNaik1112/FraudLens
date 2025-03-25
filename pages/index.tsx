@@ -222,17 +222,6 @@ export default function Landing() {
                 >
                   <Link href="/login">Start Free Trial</Link>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="text-white border-white/30 hover:bg-white/10 rounded-full"
-                >
-                  <Link href="/contact">
-                    <span>Schedule a Demo</span>
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
               </div>
             </div>
           </section>
