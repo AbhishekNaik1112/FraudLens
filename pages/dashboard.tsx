@@ -42,7 +42,7 @@ export default function Dashboard() {
       <Layout>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-slate-900">Fraud Monitoring Dashboard</h1>
+            <h1 className="text-3xl font-bold text-slate-900">FraudLens Dashboard</h1>
             <div className="flex items-center gap-2 mt-4 md:mt-0">
               <p className="text-sm text-slate-500">Last updated: {new Date().toLocaleString()}</p>
             </div>
