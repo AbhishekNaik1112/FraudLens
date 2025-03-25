@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import Head from "next/head"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Shield, Bell, TrendingUp } from "lucide-react"
+import Head from 'next/head';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Shield, Bell, TrendingUp } from 'lucide-react';
 
 export default function Landing() {
   return (
@@ -28,15 +28,21 @@ export default function Landing() {
               </div>
               <nav className="hidden md:flex space-x-8">
                 <Link href="/about" legacyBehavior>
-                  <a className="text-sm font-medium text-slate-700 hover:text-primary transition-colors">About</a>
+                  <a className="text-sm font-medium text-slate-700 hover:text-primary transition-colors">
+                    About
+                  </a>
                 </Link>
                 <Link href="/contact" legacyBehavior>
-                  <a className="text-sm font-medium text-slate-700 hover:text-primary transition-colors">Contact</a>
+                  <a className="text-sm font-medium text-slate-700 hover:text-primary transition-colors">
+                    Contact
+                  </a>
                 </Link>
               </nav>
               <div className="flex items-center space-x-4">
                 <Link href="/login" legacyBehavior>
-                  <a className="text-sm font-medium text-slate-700 hover:text-primary transition-colors">Login</a>
+                  <a className="text-sm font-medium text-slate-700 hover:text-primary transition-colors">
+                    Login
+                  </a>
                 </Link>
               </div>
             </div>
@@ -53,11 +59,16 @@ export default function Landing() {
                     Detect Fraud in <span className="text-blue-300">Real-Time</span>
                   </h1>
                   <p className="mt-6 text-xl text-slate-300 max-w-2xl mx-auto lg:mx-0">
-                    Protect your business with our advanced fraud detection platform. Get real-time alerts and
-                    actionable insights.
+                    Protect your business with our advanced fraud detection platform. Get real-time
+                    alerts and actionable insights.
                   </p>
                   <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <Button asChild size="lg" className="rounded-full bg-white/10 text-white border-white/20 hover:bg-white/20">
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="lg"
+                      className="rounded-full bg-white/10 text-white border-white/20 hover:bg-white/20"
+                    >
                       <Link href="/login">Login</Link>
                     </Button>
                     <Button
@@ -104,7 +115,8 @@ export default function Landing() {
                   </div>
                   <h3 className="text-xl font-semibold text-slate-900 mb-3">Advanced Detection</h3>
                   <p className="text-slate-600">
-                    Our AI-powered algorithms identify suspicious patterns and activities in real-time.
+                    Our AI-powered algorithms identify suspicious patterns and activities in
+                    real-time.
                   </p>
                 </div>
                 <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 hover:shadow-md transition-shadow">
@@ -131,7 +143,9 @@ export default function Landing() {
           <section className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">Trusted by Leading Companies</h2>
+                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
+                  Trusted by Leading Companies
+                </h2>
                 <p className="mt-4 text-xl text-slate-600 max-w-3xl mx-auto">
                   See what our customers have to say about our fraud detection platform.
                 </p>
@@ -150,8 +164,8 @@ export default function Landing() {
                     </div>
                   </div>
                   <p className="text-slate-700">
-                    "FraudLens has been instrumental in reducing our fraud cases by over 75%. The real-time alerts
-                    have saved us thousands of dollars."
+                    "FraudLens has been instrumental in reducing our fraud cases by over 75%. The
+                    real-time alerts have saved us thousands of dollars."
                   </p>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-6 border border-slate-100">
@@ -167,8 +181,8 @@ export default function Landing() {
                     </div>
                   </div>
                   <p className="text-slate-700">
-                    "The intuitive dashboard and detailed analytics have made it easy for our team to identify and
-                    respond to threats quickly."
+                    "The intuitive dashboard and detailed analytics have made it easy for our team
+                    to identify and respond to threats quickly."
                   </p>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-6 border border-slate-100">
@@ -184,8 +198,8 @@ export default function Landing() {
                     </div>
                   </div>
                   <p className="text-slate-700">
-                    "Since implementing FraudLens, we've seen a significant decrease in chargebacks and fraudulent
-                    transactions. Highly recommended!"
+                    "Since implementing FraudLens, we've seen a significant decrease in chargebacks
+                    and fraudulent transactions. Highly recommended!"
                   </p>
                 </div>
               </div>
@@ -193,7 +207,9 @@ export default function Landing() {
           </section>
           <section className="py-20 bg-gradient-to-br from-primary to-purple-700 text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6">Ready to Secure Your Business?</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                Ready to Secure Your Business?
+              </h2>
               <p className="text-xl text-blue-100 max-w-2xl mx-auto mb-10">
                 Start your free 14-day trial today. No credit card required.
               </p>
@@ -218,7 +234,9 @@ export default function Landing() {
                   <Shield className="h-6 w-6 text-white" />
                   <span className="text-lg font-bold text-white">FraudLens</span>
                 </div>
-                <p className="text-sm">Advanced fraud detection and prevention for modern businesses.</p>
+                <p className="text-sm">
+                  Advanced fraud detection and prevention for modern businesses.
+                </p>
               </div>
             </div>
             <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
@@ -228,6 +246,5 @@ export default function Landing() {
         </footer>
       </div>
     </>
-  )
+  );
 }
-
