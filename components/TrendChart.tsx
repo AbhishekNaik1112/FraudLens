@@ -11,15 +11,28 @@ import {
   Tooltip,
   Legend,
   Filler,
+  ArcElement,
+  BarElement,
 } from "chart.js"
-import { Line } from "react-chartjs-2"
+import { Line, Pie, Bar } from "react-chartjs-2"
 import useSWR from "swr"
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AlertCircle, TrendingUp } from "lucide-react"
+import { AlertCircle, TrendingUp } from 'lucide-react'
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
+ChartJS.register(
+  CategoryScale, 
+  LinearScale, 
+  PointElement, 
+  LineElement, 
+  Title, 
+  Tooltip, 
+  Legend, 
+  Filler,
+  ArcElement,
+  BarElement
+)
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -72,6 +85,43 @@ export default function TrendChart() {
     },
   }
 
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      tooltip: {
+        mode: "index" as const,
+        intersect: false,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: {
+          color: "rgba(0, 0, 0, 0.05)",
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+  }
+
+  const pieOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "right" as const,
+      },
+    },
+  }
+
   const lineChartData = {
     labels: data.map((d: any) => d.date),
     datasets: [
@@ -96,11 +146,58 @@ export default function TrendChart() {
       {
         label: "Fraud Cases Detected",
         data: data.map((d: any) => d.fraud_cases_detected),
-        backgroundColor: "rgba(59, 130, 246, 0.7)",
+        backgroundColor: [
+          "rgba(59, 130, 246, 0.7)",
+          "rgba(99, 102, 241, 0.7)",
+          "rgba(139, 92, 246, 0.7)",
+          "rgba(168, 85, 247, 0.7)",
+          "rgba(217, 70, 239, 0.7)",
+        ],
         borderRadius: 4,
       },
     ],
   }
+
+  // Prepare data for pie chart - group by week
+  const pieChartData = (() => {
+    // Group data by week
+    const weeks: Record<string, number> = {};
+    data.forEach((d: any) => {
+      const date = new Date(d.date);
+      const weekNumber = Math.ceil((date.getDate()) / 7);
+      const weekLabel = `Week ${weekNumber}`;
+      
+      if (!weeks[weekLabel]) {
+        weeks[weekLabel] = 0;
+      }
+      weeks[weekLabel] += d.fraud_cases_detected;
+    });
+
+    return {
+      labels: Object.keys(weeks),
+      datasets: [
+        {
+          label: "Fraud Cases by Week",
+          data: Object.values(weeks),
+          backgroundColor: [
+            "rgba(59, 130, 246, 0.7)",
+            "rgba(99, 102, 241, 0.7)",
+            "rgba(139, 92, 246, 0.7)",
+            "rgba(168, 85, 247, 0.7)",
+            "rgba(217, 70, 239, 0.7)",
+          ],
+          borderColor: [
+            "rgba(59, 130, 246, 1)",
+            "rgba(99, 102, 241, 1)",
+            "rgba(139, 92, 246, 1)",
+            "rgba(168, 85, 247, 1)",
+            "rgba(217, 70, 239, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+  })();
 
   return (
     <Card className="overflow-hidden border-none shadow-md">
@@ -112,21 +209,27 @@ export default function TrendChart() {
         <CardDescription>30-day overview of detected fraud cases</CardDescription>
       </CardHeader>
       <CardContent className="p-6">
-        <Tabs defaultValue="line">
+        <Tabs defaultValue="pie">
           <div className="flex justify-end mb-4">
             <TabsList>
-              <TabsTrigger value="line">Line Chart</TabsTrigger>
+              <TabsTrigger value="pie">Pie Chart</TabsTrigger>
               <TabsTrigger value="bar">Bar Chart</TabsTrigger>
+              <TabsTrigger value="line">Line Chart</TabsTrigger>
             </TabsList>
           </div>
-          <TabsContent value="line" className="mt-0">
-            <div className="h-[350px]">
-              <Line options={lineOptions} data={lineChartData} />
+          <TabsContent value="pie" className="mt-0">
+            <div className="h-[350px] flex items-center justify-center">
+              <Pie options={pieOptions} data={pieChartData} />
             </div>
           </TabsContent>
           <TabsContent value="bar" className="mt-0">
             <div className="h-[350px]">
-              <Line options={{ ...lineOptions, elements: { line: { tension: 0 } } }} data={barChartData} />
+              <Bar options={barOptions} data={barChartData} />
+            </div>
+          </TabsContent>
+          <TabsContent value="line" className="mt-0">
+            <div className="h-[350px]">
+              <Line options={lineOptions} data={lineChartData} />
             </div>
           </TabsContent>
         </Tabs>
@@ -158,4 +261,3 @@ export default function TrendChart() {
     </Card>
   )
 }
-
