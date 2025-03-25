@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { MessageCircle, Send, Shield } from "lucide-react"
+import { Send, Shield, Bot } from "lucide-react"
 
 type Message = {
   role: "user" | "assistant"
@@ -162,7 +162,7 @@ export default function FraudChatbot() {
     <Card className="border-none shadow-md h-[600px] flex flex-col">
       <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b">
         <div className="flex items-center">
-          <MessageCircle className="mr-2 h-5 w-5 text-primary" />
+          <Bot className="mr-2 h-5 w-5 text-primary" />
           <CardTitle className="text-xl font-semibold">Fraud Detection Assistant</CardTitle>
         </div>
       </CardHeader>
