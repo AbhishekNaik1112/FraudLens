@@ -1,4 +1,3 @@
-// pages/api/auth.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../lib/mongoose';
 import User from '../../models/User';

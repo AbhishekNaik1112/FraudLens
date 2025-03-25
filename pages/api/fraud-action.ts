@@ -1,4 +1,3 @@
-// pages/api/fraud-action.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../lib/mongoose';
 import FraudApp from '../../models/FraudApp';

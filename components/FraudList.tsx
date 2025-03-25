@@ -119,7 +119,6 @@ export default function FraudList() {
         </Alert>
       )}
 
-      {/* Fraudulent Apps Section */}
       <Card className="overflow-hidden border-none shadow-md">
         <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b p-4">
           <div className="flex items-center">
@@ -190,7 +189,6 @@ export default function FraudList() {
         </CardContent>
       </Card>
 
-      {/* Fraudulent URLs Section */}
       <Card className="overflow-hidden border-none shadow-md">
         <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50 border-b p-4">
           <div className="flex items-center">

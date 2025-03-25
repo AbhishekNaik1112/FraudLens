@@ -29,7 +29,6 @@ export default function FraudChatbot() {
     apiKey: process.env.NEXT_PUBLIC_GEMINI_API || 'your_gemini_api_key',
   });
 
-  // Fetch fraud data once when the component mounts.
   useEffect(() => {
     async function loadFraudData() {
       try {
@@ -47,13 +46,11 @@ export default function FraudChatbot() {
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    // Append the user's message.
     const userMessage: Message = { role: 'user', content: input };
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
 
     try {
-      // Optionally include fraud data context if available.
       const context = fraudData
         ? `Fraud Data Context:\n${JSON.stringify(fraudData, null, 2)}\n\n`
         : '';
@@ -62,7 +59,6 @@ export default function FraudChatbot() {
         input +
         `Don't give in markdown format and remove all markdown tags like * or # throughout the whole response`;
 
-      // Call Gemini to generate content.
       const response = await ai.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: prompt,

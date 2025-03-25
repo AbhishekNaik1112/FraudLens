@@ -36,23 +36,20 @@ ChartJS.register(
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-// Helper for Pie Chart: color by fraud cases
 function getPieColor(value: number, alpha = 0.7) {
-  if (value < 10) return `rgba(75, 192, 192, ${alpha})`; // Green
-  else if (value < 15) return `rgba(255, 205, 86, ${alpha})`; // Yellow
-  else if (value < 20) return `rgba(204, 127, 51, ${alpha})`; // Orange
-  else return `rgba(204, 79, 105, ${alpha})`; // Red
+  if (value < 10) return `rgba(75, 192, 192, ${alpha})`; 
+  else if (value < 15) return `rgba(255, 205, 86, ${alpha})`;
+  else if (value < 20) return `rgba(204, 127, 51, ${alpha})`;
+  else return `rgba(204, 79, 105, ${alpha})`;
 }
 
-// Helper for Bar Chart: color by fraud cases
 function getBarColor(value: number, alpha = 0.7) {
-  if (value <= 2) return `rgba(75, 192, 192, ${alpha})`; // Green
-  else if (value <= 4) return `rgba(255, 205, 86, ${alpha})`; // Yellow
-  else if (value <= 10) return `rgba(204, 127, 51, ${alpha})`; // Orange
-  else return `rgba(204, 79, 105, ${alpha})`; // Red
+  if (value <= 2) return `rgba(75, 192, 192, ${alpha})`; 
+  else if (value <= 4) return `rgba(255, 205, 86, ${alpha})`;
+  else if (value <= 10) return `rgba(204, 127, 51, ${alpha})`;
+  else return `rgba(204, 79, 105, ${alpha})`;
 }
 
-// Card colors remain as before (using original logic)
 function getCardColor(value: number) {
   return value > 10
     ? { bg: 'bg-red-50', border: 'border-red-100', text: 'text-red-600' }
@@ -77,7 +74,6 @@ export default function TrendChart() {
       </div>
     );
 
-  // Bar chart data using getBarColor for each data point
   const barChartData = {
     labels: data.map((d: any) => d.date),
     datasets: [
@@ -91,7 +87,6 @@ export default function TrendChart() {
     ],
   };
 
-  // Prepare pie chart data by grouping fraud cases by week using getPieColor
   const weeks: Record<string, number> = {};
   data.forEach((d: any) => {
     const date = new Date(d.date);
@@ -153,12 +148,10 @@ export default function TrendChart() {
     },
   };
 
-  // Compute overall stats
   const totalCases = data.reduce((sum: number, item: any) => sum + item.fraud_cases_detected, 0);
   const averagePerDay = (totalCases / data.length).toFixed(1);
   const highestDay = Math.max(...data.map((d: any) => d.fraud_cases_detected));
 
-  // Get colors for stat cards using original logic
   const totalCardColor = getCardColor(totalCases);
   const averageCardColor = getCardColor(Number(averagePerDay));
   const highestCardColor = getCardColor(highestDay);

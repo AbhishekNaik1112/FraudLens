@@ -12,7 +12,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BarChart3, PieChart, Shield, AlertTriangle, Activity } from "lucide-react"
 import { useRiskCount } from "@/utils/riskCount"
 
-// Add imports for our new components
 import FraudChatbot from "@/components/FraudChatbot"
 
 export default function Dashboard() {
@@ -34,7 +33,6 @@ export default function Dashboard() {
     )
   }
 
-  // Update the return statement to include our new components
   return (
     <>
       <Head>

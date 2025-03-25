@@ -1,4 +1,3 @@
-// models/FraudApp.ts
 import mongoose from 'mongoose';
 
 const FraudAppSchema = new mongoose.Schema({

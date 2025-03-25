@@ -1,4 +1,3 @@
-// models/FraudUrl.ts
 import mongoose from 'mongoose';
 
 const FraudUrlSchema = new mongoose.Schema({

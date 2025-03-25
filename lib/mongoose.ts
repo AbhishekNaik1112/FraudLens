@@ -1,19 +1,15 @@
-// lib/mongoose.ts
 import mongoose from 'mongoose';
 
-// 1. Define the interface first
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
 }
 
-// 2. Augment global scope with ESLint exception
 declare global {
   // eslint-disable-next-line no-var
   var mongoose: MongooseCache;
 }
 
-// Initialize cached connection
 let cached = global.mongoose;
 
 if (!cached) {

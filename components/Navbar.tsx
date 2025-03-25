@@ -40,7 +40,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-6">
             <Link href="/dashboard" legacyBehavior>
               <a
