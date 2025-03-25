@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useState } from "react"
@@ -8,8 +9,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { MessageCircle, Send, Shield } from "lucide-react"
 
 type Message = {
-    role: "user" | "assistant"
-    content: string
+  role: "user" | "assistant"
+  content: string
 }
 
 type FraudDetails = {
@@ -24,48 +25,49 @@ type FraudDetails = {
 }
 
 async function fetchFraudData(input: string): Promise<FraudDetails | null> {
-    try {
-        const response = await fetch(`/api/fraud-data`)
-        if (!response.ok) throw new Error("Failed to fetch fraud data")
+  try {
+    const response = await fetch("/api/fraud-data")
+    if (!response.ok) throw new Error("Failed to fetch fraud data")
 
-        const { fraudulent_apps, fraudulent_urls } = await response.json()
-        const inputLower = input.toLowerCase()
+    const { fraudulent_apps, fraudulent_urls } = await response.json()
+    const inputLower = input.toLowerCase()
 
-        // Search apps
-        const appMatch = fraudulent_apps.find((app: any) => 
-            app.app_name.toLowerCase().includes(inputLower)
-        )
-        if (appMatch) {
-            return {
-                name: appMatch.app_name,
-                type: "app",
-                risk_level: appMatch.risk_level,
-                category: appMatch.category,
-                developer: appMatch.developer,
-                reported_on: new Date(appMatch.reported_on).toISOString(),
-                description: `This app in the ${appMatch.category} category was reported on ${new Date(appMatch.reported_on).toLocaleDateString()} with ${appMatch.risk_level.toLowerCase()} risk level.`
-            }
-        }
-
-        // Search URLs
-        const urlMatch = fraudulent_urls.find((url: any) => 
-            url.url.toLowerCase().includes(inputLower)
-        if (urlMatch) {
-            return {
-                name: urlMatch.url,
-                type: "url",
-                risk_level: urlMatch.risk_level,
-                category: urlMatch.category,
-                detected_on: new Date(urlMatch.detected_on).toISOString(),
-                description: `This URL was flagged for ${urlMatch.category} on ${new Date(urlMatch.detected_on).toLocaleDateString()} with ${urlMatch.risk_level.toLowerCase()} risk level.`
-            }
-        }
-
-        return null
-    } catch (error) {
-        console.error("Error fetching fraud data:", error)
-        return null
+    // Search apps
+    const appMatch = fraudulent_apps.find((app: any) =>
+      app.app_name.toLowerCase().includes(inputLower)
+    )
+    if (appMatch) {
+      return {
+        name: appMatch.app_name,
+        type: "app",
+        risk_level: appMatch.risk_level,
+        category: appMatch.category,
+        developer: appMatch.developer,
+        reported_on: new Date(appMatch.reported_on).toISOString(),
+        description: `This app in the ${appMatch.category} category was reported on ${new Date(appMatch.reported_on).toLocaleDateString()} with ${appMatch.risk_level.toLowerCase()} risk level.`
+      }
     }
+
+    // Search URLs
+    const urlMatch = fraudulent_urls.find((url: any) =>
+      url.url.toLowerCase().includes(inputLower)
+    )
+    if (urlMatch) {
+      return {
+        name: urlMatch.url,
+        type: "url",
+        risk_level: urlMatch.risk_level,
+        category: urlMatch.category,
+        detected_on: new Date(urlMatch.detected_on).toISOString(),
+        description: `This URL was flagged for ${urlMatch.category} on ${new Date(urlMatch.detected_on).toLocaleDateString()} with ${urlMatch.risk_level.toLowerCase()} risk level.`
+      }
+    }
+
+    return null
+  } catch (error) {
+    console.error("Error fetching fraud data:", error)
+    return null
+  }
 }
 
 export default function FraudChatbot() {
@@ -88,8 +90,8 @@ export default function FraudChatbot() {
 
     try {
       const fraudData = await fetchFraudData(input)
-      
-      const botResponse: Message = fraudData 
+
+      const botResponse: Message = fraudData
         ? { role: "assistant", content: JSON.stringify(fraudData) }
         : { role: "assistant", content: "This app/URL is not yet registered in our database. Would you like to report it?" }
 

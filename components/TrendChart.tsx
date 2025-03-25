@@ -14,7 +14,7 @@ import {
   ArcElement,
   BarElement,
 } from "chart.js"
-import { Line, Pie, Bar } from "react-chartjs-2"
+import { Pie, Bar } from "react-chartjs-2"
 import useSWR from "swr"
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -54,36 +54,6 @@ export default function TrendChart() {
       </div>
     )
 
-  const lineOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      tooltip: {
-        mode: "index" as const,
-        intersect: false,
-      },
-    },
-    hover: {
-      mode: "nearest" as const,
-      intersect: true,
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        grid: {
-          color: "rgba(0, 0, 0, 0.05)",
-        },
-      },
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-    },
-  }
 
   const barOptions = {
     responsive: true,
@@ -122,24 +92,6 @@ export default function TrendChart() {
     },
   }
 
-  const lineChartData = {
-    labels: data.map((d: any) => d.date),
-    datasets: [
-      {
-        label: "Fraud Cases Detected",
-        data: data.map((d: any) => d.fraud_cases_detected),
-        fill: true,
-        backgroundColor: "rgba(59, 130, 246, 0.1)",
-        borderColor: "rgba(59, 130, 246, 0.8)",
-        tension: 0.3,
-        pointRadius: 3,
-        pointBackgroundColor: "rgba(59, 130, 246, 1)",
-        pointBorderColor: "#fff",
-        pointBorderWidth: 1,
-      },
-    ],
-  }
-
   const barChartData = {
     labels: data.map((d: any) => d.date),
     datasets: [
@@ -158,9 +110,7 @@ export default function TrendChart() {
     ],
   }
 
-  // Prepare data for pie chart - group by week
   const pieChartData = (() => {
-    // Group data by week
     const weeks: Record<string, number> = {};
     data.forEach((d: any) => {
       const date = new Date(d.date);
@@ -214,7 +164,6 @@ export default function TrendChart() {
             <TabsList>
               <TabsTrigger value="pie">Pie Chart</TabsTrigger>
               <TabsTrigger value="bar">Bar Chart</TabsTrigger>
-              <TabsTrigger value="line">Line Chart</TabsTrigger>
             </TabsList>
           </div>
           <TabsContent value="pie" className="mt-0">
@@ -225,11 +174,6 @@ export default function TrendChart() {
           <TabsContent value="bar" className="mt-0">
             <div className="h-[350px]">
               <Bar options={barOptions} data={barChartData} />
-            </div>
-          </TabsContent>
-          <TabsContent value="line" className="mt-0">
-            <div className="h-[350px]">
-              <Line options={lineOptions} data={lineChartData} />
             </div>
           </TabsContent>
         </Tabs>
