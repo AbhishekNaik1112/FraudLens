@@ -18,6 +18,7 @@
     - [`/api/fraud-action`](#apifraud-action)
     - [`/api/fraud-trends`](#apifraud-trends)
   - [How to Run Locally](#how-to-run-locally)
+  - [Contribution](#contribution)
 
 ## Problem Statement
 
@@ -106,3 +107,38 @@ Provides aggregated fraud trend data for visualization.
 5. Access the application at `http://localhost:3000`.
 
 6. To seed additional data, modify the `seed.ts` file located in the `api` folder. Once the database connection is properly configured, navigate to `http://localhost:3000/api/seed` to populate your database with the seeded data.
+
+
+## Contribution
+
+We welcome contributions to improve FraudLens! Here's how you can contribute:
+
+1. **Fork the Repository**: Click the "Fork" button at the top-right corner of the repository page.
+
+2. **Clone Your Fork**:
+    ```bash
+    git clone https://github.com/AbhishekNaik1112/FraudLens.git
+    cd FraudLens
+    ```
+
+3. **Create a Branch**:
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+
+4. **Make Changes**: Implement your changes or fixes.
+
+5. **Test Your Changes**: Ensure your changes work as expected and do not break existing functionality.
+
+6. **Commit Your Changes**:
+    ```bash
+    git add .
+    git commit -m "Add a brief description of your changes"
+    ```
+
+7. **Push to Your Fork**:
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+
+8. **Create a Pull Request**: Go to the original repository, click "Pull Requests," and submit your pull request. Provide a clear description of your changes.
