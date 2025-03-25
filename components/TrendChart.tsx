@@ -36,21 +36,23 @@ ChartJS.register(
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-// Helper for Pie Chart (original logic: red if value > 10, else green)
+// Helper for Pie Chart: color by fraud cases
 function getPieColor(value: number, alpha = 0.7) {
-  return value > 10
-    ? `rgba(255, 99, 132, ${alpha})`   // red shade
-    : `rgba(75, 192, 192, ${alpha})`    // green shade
+  if (value < 10) return `rgba(75, 192, 192, ${alpha})`       // Green
+  else if (value < 15) return `rgba(255, 205, 86, ${alpha})`   // Yellow
+  else if (value < 20) return `rgba(255, 159, 64, ${alpha})`    // Orange
+  else return `rgba(255, 99, 132, ${alpha})`                   // Red
 }
 
-// Helper for Bar Chart (new logic: red if value is >= 4, else green)
+// Helper for Bar Chart: color by fraud cases
 function getBarColor(value: number, alpha = 0.7) {
-  return value >= 4
-    ? `rgba(255, 99, 132, ${alpha})`   // red shade
-    : `rgba(75, 192, 192, ${alpha})`    // green shade
+  if (value <= 2) return `rgba(75, 192, 192, ${alpha})`        // Green
+  else if (value <= 4) return `rgba(255, 205, 86, ${alpha})`    // Yellow
+  else if (value <= 10) return `rgba(255, 159, 64, ${alpha})`   // Orange
+  else return `rgba(255, 99, 132, ${alpha})`                    // Red
 }
 
-// Card colors remain unchanged
+// Card colors remain as before (using original logic)
 function getCardColor(value: number) {
   return value > 10
     ? { bg: "bg-red-50", border: "border-red-100", text: "text-red-600" }
@@ -75,7 +77,7 @@ export default function TrendChart() {
       </div>
     )
 
-  // Bar chart data uses getBarColor for each data point
+  // Bar chart data using getBarColor for each data point
   const barChartData = {
     labels: data.map((d: any) => d.date),
     datasets: [
