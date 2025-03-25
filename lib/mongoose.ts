@@ -20,7 +20,7 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || '';
+const MONGODB_URI = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
 async function connectDB() {
   if (cached.conn) {

@@ -30,7 +30,7 @@ export default function FraudChatbot() {
   const [fraudData, setFraudData] = useState<FraudData | null>(null);
 
   const client = new OpenAI({
-    apiKey: process.env.GROK_API,
+    apiKey: process.env.NEXT_PUBLIC_GROK_API,
     baseURL: 'https://api.x.ai/v1/chat/completions',
   });
 
