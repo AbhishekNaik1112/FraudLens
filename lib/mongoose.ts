@@ -1,13 +1,19 @@
 // lib/mongoose.ts
-
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || '';
-
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+// 1. Define the interface first
+interface MongooseCache {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
 }
 
+// 2. Augment global scope with ESLint exception
+declare global {
+  // eslint-disable-next-line no-var
+  var mongoose: MongooseCache;
+}
+
+// Initialize cached connection
 let cached = global.mongoose;
 
 if (!cached) {
@@ -20,7 +26,7 @@ async function connectDB() {
   }
   if (!cached.promise) {
     const opts = { bufferCommands: false };
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then(mongoose => mongoose);
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => mongoose);
   }
   cached.conn = await cached.promise;
   return cached.conn;
