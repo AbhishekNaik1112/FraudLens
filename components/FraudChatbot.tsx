@@ -28,7 +28,7 @@ export default function FraudChatbot() {
 
 
   const ai = new GoogleGenAI({
-    apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || "your_gemini_api_key",
+    apiKey: process.env.NEXT_PUBLIC_GEMINI_API || "your_gemini_api_key",
   })
 
   // Fetch fraud data once when the component mounts.
@@ -63,7 +63,7 @@ export default function FraudChatbot() {
 
       // Call Gemini to generate content.
       const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash-001",
+        model: "gemini-2.0-flash",
         contents: prompt,
       })
 
