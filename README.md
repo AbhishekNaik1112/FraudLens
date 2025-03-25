@@ -8,8 +8,15 @@
   - [Key Features](#key-features)
   - [Tech Stack](#tech-stack)
   - [Features Overview](#features-overview)
+    - [Fraudulent Apps \& URLs](#fraudulent-apps--urls)
+    - [30-Day Trend Analysis](#30-day-trend-analysis)
+    - [User Authentication](#user-authentication)
+    - [AI Chatbot](#ai-chatbot)
   - [Screenshots](#screenshots)
   - [API Endpoints](#api-endpoints)
+    - [`/api/fraud-data`](#apifraud-data)
+    - [`/api/fraud-action`](#apifraud-action)
+    - [`/api/fraud-trends`](#apifraud-trends)
   - [How to Run Locally](#how-to-run-locally)
 
 ## Problem Statement
@@ -49,17 +56,6 @@ A secure login mechanism ensures that only authorized users can access the dashb
 ### AI Chatbot
 A chatbot which will allow analysts or admins get ask questions based on existing data.
 
-## API Endpoints
-
-### `/api/fraud-data`
-Fetches all fraudulent apps and URLs from the database.
-
-### `/api/fraud-action`
-Allows users to update the status of fraudulent entities (e.g., block, report, investigate).
-
-### `/api/fraud-trends`
-Provides aggregated fraud trend data for visualization.
-
 ## Screenshots
 
 1. Landing Page - ![image](https://github.com/user-attachments/assets/c099a3ad-42f5-4379-afd4-c25ff92038cb)
@@ -71,6 +67,17 @@ Provides aggregated fraud trend data for visualization.
 7. Graph Analytics - ![{92E6EE28-7E45-46B1-9081-D2679C054525}](https://github.com/user-attachments/assets/4d00392e-8d71-4952-a716-a21bc60ee120)
 8. Fraud Apps Section with Actions(Report, Block, Investigate) - ![image](https://github.com/user-attachments/assets/f2363307-eb5a-45f8-9df8-6eae0c597e8e)
 9. Fraud URLs Section with Actions(Report, Block, Investigate) - ![image](https://github.com/user-attachments/assets/0d2cecc6-da00-455c-8e34-82b2b6e060e7)
+
+## API Endpoints
+
+### `/api/fraud-data`
+Fetches all fraudulent apps and URLs from the database.
+
+### `/api/fraud-action`
+Allows users to update the status of fraudulent entities (e.g., block, report, investigate).
+
+### `/api/fraud-trends`
+Provides aggregated fraud trend data for visualization.
 
 ## How to Run Locally
 
