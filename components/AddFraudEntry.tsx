@@ -17,7 +17,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
 import { PlusCircle, AlertCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
@@ -32,13 +31,11 @@ export default function AddFraudEntry() {
   const [developer, setDeveloper] = useState("")
   const [appCategory, setAppCategory] = useState("")
   const [appRiskLevel, setAppRiskLevel] = useState("")
-  const [appDescription, setAppDescription] = useState("")
 
   // URL form state
   const [url, setUrl] = useState("")
   const [urlCategory, setUrlCategory] = useState("")
   const [urlRiskLevel, setUrlRiskLevel] = useState("")
-  const [urlDescription, setUrlDescription] = useState("")
 
   const resetForm = () => {
     // Reset app form
@@ -46,13 +43,11 @@ export default function AddFraudEntry() {
     setDeveloper("")
     setAppCategory("")
     setAppRiskLevel("")
-    setAppDescription("")
 
     // Reset URL form
     setUrl("")
     setUrlCategory("")
     setUrlRiskLevel("")
-    setUrlDescription("")
 
     // Reset status
     setError("")
@@ -193,17 +188,6 @@ export default function AddFraudEntry() {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="app-description">Description</Label>
-                <Textarea
-                  id="app-description"
-                  value={appDescription}
-                  onChange={(e) => setAppDescription(e.target.value)}
-                  placeholder="Describe the fraudulent behavior..."
-                  required
-                />
-              </div>
-
               <DialogFooter>
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting ? (
@@ -263,17 +247,6 @@ export default function AddFraudEntry() {
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="url-description">Description</Label>
-                <Textarea
-                  id="url-description"
-                  value={urlDescription}
-                  onChange={(e) => setUrlDescription(e.target.value)}
-                  placeholder="Describe the fraudulent behavior..."
-                  required
-                />
               </div>
 
               <DialogFooter>
