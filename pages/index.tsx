@@ -38,9 +38,6 @@ export default function Landing() {
                 <Link href="/login" legacyBehavior>
                   <a className="text-sm font-medium text-slate-700 hover:text-primary transition-colors">Login</a>
                 </Link>
-                <Button asChild size="sm" className="rounded-full">
-                  <Link href="/login">Get Started</Link>
-                </Button>
               </div>
             </div>
           </div>
@@ -61,7 +58,7 @@ export default function Landing() {
                   </p>
                   <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                     <Button asChild size="lg" className="rounded-full">
-                      <Link href="/login">Start Free Trial</Link>
+                      <Link href="/login">Login</Link>
                     </Button>
                     <Button
                       asChild
@@ -207,7 +204,7 @@ export default function Landing() {
                   variant="default"
                   className="bg-white text-primary hover:bg-slate-100 rounded-full"
                 >
-                  <Link href="/login">Start Free Trial</Link>
+                  <Link href="/login">Login</Link>
                 </Button>
               </div>
             </div>
