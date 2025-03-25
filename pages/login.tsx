@@ -1,14 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Card,
   CardContent,
@@ -16,18 +16,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Shield, LogIn, AlertCircle } from "lucide-react";
-import useAuthStore from "@/store/authStore";
+} from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Shield, LogIn, AlertCircle } from 'lucide-react';
+import useAuthStore from '@/store/authStore';
 
 export default function Login() {
   const router = useRouter();
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -35,8 +35,8 @@ export default function Login() {
     setMounted(true);
 
     // Load email and rememberMe from localStorage
-    const savedEmail = localStorage.getItem("rememberedEmail");
-    const savedRememberMe = localStorage.getItem("rememberMe") === "true";
+    const savedEmail = localStorage.getItem('rememberedEmail');
+    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
 
     if (savedRememberMe && savedEmail) {
       setEmail(savedEmail);
@@ -49,12 +49,12 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
+    setError('');
 
     try {
-      const res = await fetch("/api/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
@@ -63,19 +63,19 @@ export default function Login() {
       if (data.success) {
         setAuthenticated(true);
         if (rememberMe) {
-          localStorage.setItem("rememberedEmail", email);
-          localStorage.setItem("rememberMe", "true");
+          localStorage.setItem('rememberedEmail', email);
+          localStorage.setItem('rememberMe', 'true');
         } else {
-          localStorage.removeItem("rememberedEmail");
-          localStorage.removeItem("rememberMe");
+          localStorage.removeItem('rememberedEmail');
+          localStorage.removeItem('rememberMe');
         }
-        router.push("/dashboard");
+        router.push('/dashboard');
       } else {
         setError(data.message);
       }
     } catch (err) {
       console.error(err);
-      setError("An unexpected error occurred. Please try again.");
+      setError('An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -92,14 +92,12 @@ export default function Login() {
           <Link href="/" legacyBehavior>
             <a className="flex items-center space-x-2">
               <Shield className="h-6 w-6 text-primary" />
-              <span className="text-lg font-bold text-primary">
-                FraudDetect
-              </span>
+              <span className="text-lg font-bold text-primary">FraudDetect</span>
             </a>
           </Link>
           <Link href="/" legacyBehavior>
             <a
-              onClick={() => router.push("/")}
+              onClick={() => router.push('/')}
               className="text-sm text-slate-600 hover:text-primary transition-colors cursor-pointer"
             >
               Back to Home
@@ -173,18 +171,34 @@ export default function Login() {
                       Logging in...
                     </div>
                   ) : (
-                    "Login"
+                    'Login'
                   )}
                 </Button>
               </form>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-              <p className="text-sm text-center">
-                Don't have an account?{" "}
-                <Link href="/signup" legacyBehavior>
-                  <a className="text-primary hover:underline">Sign up</a>
-                </Link>
-              </p>
+              <div className="mt-6 p-4 bg-blue-50 border border-blue-100 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <div className="h-5 w-5 bg-primary/10 rounded-full flex items-center justify-center mr-2">
+                    <Shield className="h-3 w-3 text-primary" />
+                  </div>
+                  <h3 className="font-medium text-sm text-slate-700">Demo Credentials</h3>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between p-2 bg-white rounded border border-blue-100">
+                    <div className="text-slate-700">
+                      <span className="font-medium">Admin:</span> admin@fraudlens.com
+                    </div>
+                    <div className="text-slate-500">password</div>
+                  </div>
+                  <div className="flex items-center justify-between p-2 bg-white rounded border border-blue-100">
+                    <div className="text-slate-700">
+                      <span className="font-medium">Analyst:</span> analyst@fraudlens.com
+                    </div>
+                    <div className="text-slate-500">password</div>
+                  </div>
+                </div>
+              </div>
             </CardFooter>
           </Card>
         </div>
