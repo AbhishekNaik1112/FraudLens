@@ -36,16 +36,23 @@ ChartJS.register(
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-// Helper function to determine color based on intensity
-function getColor(value: number, alpha = 0.7) {
-  // If above 15 use red; otherwise use green.
+// Helper for Pie Chart (original logic: red if value > 10, else green)
+function getPieColor(value: number, alpha = 0.7) {
   return value > 10
     ? `rgba(255, 99, 132, ${alpha})`   // red shade
     : `rgba(75, 192, 192, ${alpha})`    // green shade
 }
 
+// Helper for Bar Chart (new logic: red if value is >= 4, else green)
+function getBarColor(value: number, alpha = 0.7) {
+  return value >= 4
+    ? `rgba(255, 99, 132, ${alpha})`   // red shade
+    : `rgba(75, 192, 192, ${alpha})`    // green shade
+}
+
+// Card colors remain unchanged
 function getCardColor(value: number) {
-  return value >   10
+  return value > 10
     ? { bg: "bg-red-50", border: "border-red-100", text: "text-red-600" }
     : { bg: "bg-green-50", border: "border-green-100", text: "text-green-600" }
 }
@@ -68,21 +75,21 @@ export default function TrendChart() {
       </div>
     )
 
-  // Bar chart data: assign colors based on each data point's fraud_cases_detected
+  // Bar chart data uses getBarColor for each data point
   const barChartData = {
     labels: data.map((d: any) => d.date),
     datasets: [
       {
         label: "Fraud Cases Detected",
         data: data.map((d: any) => d.fraud_cases_detected),
-        backgroundColor: data.map((d: any) => getColor(d.fraud_cases_detected, 0.7)),
-        borderColor: data.map((d: any) => getColor(d.fraud_cases_detected, 1)),
+        backgroundColor: data.map((d: any) => getBarColor(d.fraud_cases_detected, 0.7)),
+        borderColor: data.map((d: any) => getBarColor(d.fraud_cases_detected, 1)),
         borderRadius: 4,
       },
     ],
   }
 
-  // Prepare pie chart data by grouping fraud cases by week
+  // Prepare pie chart data by grouping fraud cases by week using getPieColor
   const weeks: Record<string, number> = {}
   data.forEach((d: any) => {
     const date = new Date(d.date)
@@ -100,8 +107,8 @@ export default function TrendChart() {
       {
         label: "Fraud Cases by Week",
         data: Object.values(weeks),
-        backgroundColor: Object.values(weeks).map((val: number) => getColor(val, 0.7)),
-        borderColor: Object.values(weeks).map((val: number) => getColor(val, 1)),
+        backgroundColor: Object.values(weeks).map((val: number) => getPieColor(val, 0.7)),
+        borderColor: Object.values(weeks).map((val: number) => getPieColor(val, 1)),
         borderWidth: 1,
       },
     ],
@@ -149,7 +156,7 @@ export default function TrendChart() {
   const averagePerDay = (totalCases / data.length).toFixed(1)
   const highestDay = Math.max(...data.map((d: any) => d.fraud_cases_detected))
 
-  // Get colors for stat cards
+  // Get colors for stat cards using original logic
   const totalCardColor = getCardColor(totalCases)
   const averageCardColor = getCardColor(Number(averagePerDay))
   const highestCardColor = getCardColor(highestDay)
