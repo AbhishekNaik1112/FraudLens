@@ -8,8 +8,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { MessageCircle, Send, Shield } from "lucide-react"
 
 type Message = {
-  role: "user" | "assistant"
-  content: string
+    role: "user" | "assistant"
+    content: string
 }
 
 type FraudDetails = {
@@ -23,13 +23,57 @@ type FraudDetails = {
   description: string
 }
 
+async function fetchFraudData(input: string): Promise<FraudDetails | null> {
+    try {
+        const response = await fetch(`/api/fraud-data`)
+        if (!response.ok) throw new Error("Failed to fetch fraud data")
+
+        const { fraudulent_apps, fraudulent_urls } = await response.json()
+        const inputLower = input.toLowerCase()
+
+        // Search apps
+        const appMatch = fraudulent_apps.find((app: any) => 
+            app.app_name.toLowerCase().includes(inputLower)
+        )
+        if (appMatch) {
+            return {
+                name: appMatch.app_name,
+                type: "app",
+                risk_level: appMatch.risk_level,
+                category: appMatch.category,
+                developer: appMatch.developer,
+                reported_on: new Date(appMatch.reported_on).toISOString(),
+                description: `This app in the ${appMatch.category} category was reported on ${new Date(appMatch.reported_on).toLocaleDateString()} with ${appMatch.risk_level.toLowerCase()} risk level.`
+            }
+        }
+
+        // Search URLs
+        const urlMatch = fraudulent_urls.find((url: any) => 
+            url.url.toLowerCase().includes(inputLower)
+        if (urlMatch) {
+            return {
+                name: urlMatch.url,
+                type: "url",
+                risk_level: urlMatch.risk_level,
+                category: urlMatch.category,
+                detected_on: new Date(urlMatch.detected_on).toISOString(),
+                description: `This URL was flagged for ${urlMatch.category} on ${new Date(urlMatch.detected_on).toLocaleDateString()} with ${urlMatch.risk_level.toLowerCase()} risk level.`
+            }
+        }
+
+        return null
+    } catch (error) {
+        console.error("Error fetching fraud data:", error)
+        return null
+    }
+}
+
 export default function FraudChatbot() {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content:
-        "Hello! I can help you check if an app or URL is potentially fraudulent. Please enter an app name or URL to check.",
+      content: "Hello! I can help you check if an app or URL is potentially fraudulent. Please enter an app name or URL to check.",
     },
   ])
   const [isLoading, setIsLoading] = useState(false)
@@ -43,82 +87,18 @@ export default function FraudChatbot() {
     setIsLoading(true)
 
     try {
-      // In a real app, this would be an API call to your backend
-      // For demo purposes, we'll simulate a response
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      let botResponse: Message
-
-      // Simple pattern matching for demo
-      const inputLower = input.toLowerCase()
-      if (inputLower.includes("facebook") || inputLower.includes("fb")) {
-        botResponse = {
-          role: "assistant",
-          content: JSON.stringify({
-            name: "Facebook Phishing App",
-            type: "app",
-            risk_level: "High",
-            category: "Phishing",
-            developer: "Unknown",
-            reported_on: new Date().toISOString(),
-            description: "This app attempts to steal Facebook credentials through a fake login page.",
-          } as FraudDetails),
-        }
-      } else if (inputLower.includes("paypal")) {
-        botResponse = {
-          role: "assistant",
-          content: JSON.stringify({
-            name: "PayPal Security",
-            type: "app",
-            risk_level: "High",
-            category: "Financial Fraud",
-            developer: "SecurePayments (fake)",
-            reported_on: new Date().toISOString(),
-            description: "This app claims to enhance PayPal security but steals user credentials.",
-          } as FraudDetails),
-        }
-      } else if (inputLower.includes("bank") || inputLower.includes("banking")) {
-        botResponse = {
-          role: "assistant",
-          content: JSON.stringify({
-            name: "Quick Banking",
-            type: "app",
-            risk_level: "Medium",
-            category: "Financial",
-            developer: "FinTech Solutions",
-            reported_on: new Date().toISOString(),
-            description: "This app requests excessive permissions and has been reported for suspicious activity.",
-          } as FraudDetails),
-        }
-      } else if (inputLower.includes("http") || inputLower.includes("www")) {
-        botResponse = {
-          role: "assistant",
-          content: JSON.stringify({
-            name: input,
-            type: "url",
-            risk_level: "Medium",
-            category: "Suspicious Link",
-            detected_on: new Date().toISOString(),
-            description: "This URL has been flagged for potential phishing attempts.",
-          } as FraudDetails),
-        }
-      } else {
-        botResponse = {
-          role: "assistant",
-          content:
-            "I couldn't find any fraud information about this. Would you like to report it as potentially fraudulent?",
-        }
-      }
+      const fraudData = await fetchFraudData(input)
+      
+      const botResponse: Message = fraudData 
+        ? { role: "assistant", content: JSON.stringify(fraudData) }
+        : { role: "assistant", content: "This app/URL is not yet registered in our database. Would you like to report it?" }
 
       setMessages((prev) => [...prev, botResponse])
     } catch (error) {
-      console.error("Error fetching fraud data:", error)
+      console.error("Error checking fraud data:", error)
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: "Sorry, I encountered an error while checking this. Please try again later.",
-        },
+        { role: "assistant", content: "Sorry, I encountered an error while checking. Please try again later." }
       ])
     } finally {
       setIsLoading(false)
@@ -130,13 +110,14 @@ export default function FraudChatbot() {
     if (message.role === "user") {
       return (
         <div key={index} className="flex justify-end mb-4">
-          <div className="bg-primary text-primary-foreground rounded-lg py-2 px-4 max-w-[80%]">{message.content}</div>
+          <div className="bg-primary text-primary-foreground rounded-lg py-2 px-4 max-w-[80%]">
+            {message.content}
+          </div>
         </div>
       )
     }
 
     try {
-      // Try to parse as JSON (for fraud details)
       const fraudDetails = JSON.parse(message.content) as FraudDetails
       return (
         <div key={index} className="flex justify-start mb-4">
@@ -144,46 +125,32 @@ export default function FraudChatbot() {
             <div className="flex items-center mb-2">
               <Shield className="h-5 w-5 text-red-500 mr-2" />
               <h4 className="font-bold">{fraudDetails.name}</h4>
-              <span
-                className={`ml-2 text-xs px-2 py-1 rounded ${
-                  fraudDetails.risk_level === "High"
-                    ? "bg-red-100 text-red-800"
-                    : fraudDetails.risk_level === "Medium"
-                      ? "bg-amber-100 text-amber-800"
-                      : "bg-blue-100 text-blue-800"
-                }`}
-              >
+              <span className={`ml-2 text-xs px-2 py-1 rounded ${
+                fraudDetails.risk_level === "High" ? "bg-red-100 text-red-800" :
+                fraudDetails.risk_level === "Medium" ? "bg-amber-100 text-amber-800" :
+                "bg-blue-100 text-blue-800"
+              }`}>
                 {fraudDetails.risk_level} Risk
               </span>
             </div>
             <div className="text-sm space-y-1">
-              <p>
-                <span className="font-medium">Type:</span> {fraudDetails.type === "app" ? "Application" : "URL"}
-              </p>
-              <p>
-                <span className="font-medium">Category:</span> {fraudDetails.category}
-              </p>
-              {fraudDetails.developer && (
-                <p>
-                  <span className="font-medium">Developer:</span> {fraudDetails.developer}
-                </p>
-              )}
-              <p>
-                <span className="font-medium">Reported:</span>{" "}
-                {new Date(fraudDetails.reported_on || fraudDetails.detected_on || "").toLocaleDateString()}
-              </p>
-              <p>
-                <span className="font-medium">Description:</span> {fraudDetails.description}
-              </p>
+              <p><span className="font-medium">Type:</span> {fraudDetails.type === "app" ? "Application" : "URL"}</p>
+              <p><span className="font-medium">Category:</span> {fraudDetails.category}</p>
+              {fraudDetails.developer && <p><span className="font-medium">Developer:</span> {fraudDetails.developer}</p>}
+              <p><span className="font-medium">Detected:</span> {
+                new Date(fraudDetails.reported_on || fraudDetails.detected_on || Date.now()).toLocaleDateString()
+              }</p>
+              <p><span className="font-medium">Description:</span> {fraudDetails.description}</p>
             </div>
           </div>
         </div>
       )
     } catch {
-      // Regular text message
       return (
         <div key={index} className="flex justify-start mb-4">
-          <div className="bg-slate-100 rounded-lg py-2 px-4 max-w-[80%]">{message.content}</div>
+          <div className="bg-slate-100 rounded-lg py-2 px-4 max-w-[80%]">
+            {message.content}
+          </div>
         </div>
       )
     }
@@ -214,13 +181,7 @@ export default function FraudChatbot() {
         </ScrollArea>
       </CardContent>
       <CardFooter className="border-t p-4">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            handleSend()
-          }}
-          className="flex w-full space-x-2"
-        >
+        <form onSubmit={(e) => { e.preventDefault(); handleSend() }} className="flex w-full space-x-2">
           <Input
             placeholder="Enter an app name or URL..."
             value={input}
@@ -235,4 +196,3 @@ export default function FraudChatbot() {
     </Card>
   )
 }
-
