@@ -1,14 +1,13 @@
-/* eslint-disable react/no-unescaped-entities */
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Head from 'next/head'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Card,
   CardContent,
@@ -16,57 +15,62 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Shield, LogIn, AlertCircle } from 'lucide-react';
-import useAuthStore from '@/store/authStore';
+} from '@/components/ui/card'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Shield, LogIn, AlertCircle } from 'lucide-react'
+import useAuthStore from '@/store/authStore'
 
 export default function Login() {
-  const router = useRouter();
-  const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const router = useRouter()
+  const setAuthenticated = useAuthStore((state) => state.setAuthenticated)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
-
-    // Load email and rememberMe from localStorage
-    const savedEmail = localStorage.getItem('rememberedEmail');
-    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
-
+    setMounted(true)
+    const savedEmail = localStorage.getItem('rememberedEmail')
+    const savedRememberMe = localStorage.getItem('rememberMe') === 'true'
+    
     if (savedRememberMe && savedEmail) {
-      setEmail(savedEmail);
-      setRememberMe(true);
+      setEmail(savedEmail)
+      setRememberMe(true)
     }
-  }, []);
+  }, [])
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError('')
-  
+
     try {
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       })
-  
+
       if (res.ok) {
-        useAuthStore.getState().setAuthenticated(true) // Updates Zustand AND localStorage
+        setAuthenticated(true)
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', email)
+          localStorage.setItem('rememberMe', 'true')
+        } else {
+          localStorage.removeItem('rememberedEmail')
+          localStorage.removeItem('rememberMe')
+        }
         router.push('/dashboard')
       } else {
         setError('Invalid credentials')
       }
     } catch (err) {
       console.error(err)
-      setError('An error occurred')
+      setError('An unexpected error occurred. Please try again.')
     } finally {
       setIsLoading(false)
     }

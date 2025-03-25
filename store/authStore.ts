@@ -1,4 +1,3 @@
-// store/authStore.ts
 import { create } from 'zustand'
 
 type AuthState = {
@@ -6,7 +5,7 @@ type AuthState = {
   setAuthenticated: (auth: boolean) => void
 }
 
-// Check localStorage on initial load (client-side only)
+// Initialize state from localStorage
 const initializeAuthState = (): boolean => {
   if (typeof window !== 'undefined') {
     return localStorage.getItem('isAuthenticated') === 'true'
@@ -17,7 +16,6 @@ const initializeAuthState = (): boolean => {
 const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: initializeAuthState(),
   setAuthenticated: (auth: boolean) => {
-    // Persist to localStorage
     if (typeof window !== 'undefined') {
       localStorage.setItem('isAuthenticated', auth ? 'true' : 'false')
     }
