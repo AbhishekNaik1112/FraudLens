@@ -140,13 +140,9 @@ export default function Dashboard() {
           <Tabs defaultValue="fraud-list" className="mb-8">
             <TabsList className="mb-4">
               <TabsTrigger value="fraud-list">Fraud List</TabsTrigger>
-              <TabsTrigger value="trend-analysis">Trend Analysis</TabsTrigger>
             </TabsList>
             <TabsContent value="fraud-list" className="mt-0">
               <FraudList />
-            </TabsContent>
-            <TabsContent value="trend-analysis" className="mt-0">
-              <TrendChart />
             </TabsContent>
           </Tabs>
         </div>
