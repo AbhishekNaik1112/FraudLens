@@ -36,18 +36,29 @@ ChartJS.register(
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-// Helper function to determine color based on intensity
+// Helper function to determine red color based on fraud cases
 function getColor(value: number, alpha = 0.7) {
-  // If above 15 use red; otherwise use green.
-  return value > 15
-    ? `rgba(255, 99, 132, ${alpha})`   // red shade
-    : `rgba(75, 192, 192, ${alpha})`    // green shade
+  if (value >= 15) {
+    // Dark red
+    return `rgba(139, 0, 0, ${alpha})`
+  } else if (value >= 10) {
+    // Normal red
+    return `rgba(255, 0, 0, ${alpha})`
+  } else {
+    // Light red
+    return `rgba(255, 182, 193, ${alpha})`
+  }
 }
 
+// Helper function for card styling based on fraud cases using Tailwind classes
 function getCardColor(value: number) {
-  return value > 15
-    ? { bg: "bg-red-50", border: "border-red-100", text: "text-red-600" }
-    : { bg: "bg-green-50", border: "border-green-100", text: "text-green-600" }
+  if (value >= 15) {
+    return { bg: "bg-red-900", border: "border-red-900", text: "text-red-900" }
+  } else if (value >= 10) {
+    return { bg: "bg-red-500", border: "border-red-500", text: "text-red-500" }
+  } else {
+    return { bg: "bg-red-100", border: "border-red-200", text: "text-red-700" }
+  }
 }
 
 export default function TrendChart() {
@@ -68,7 +79,7 @@ export default function TrendChart() {
       </div>
     )
 
-  // Bar chart data: assign colors based on each data point's fraud_cases_detected
+  // Bar chart: use dynamic red colors for each data point
   const barChartData = {
     labels: data.map((d: any) => d.date),
     datasets: [
