@@ -8,14 +8,8 @@
   - [Key Features](#key-features)
   - [Tech Stack](#tech-stack)
   - [Features Overview](#features-overview)
-    - [Fraudulent Apps \& URLs](#fraudulent-apps--urls)
-    - [30-Day Trend Analysis](#30-day-trend-analysis)
-    - [User Authentication](#user-authentication)
   - [Screenshots](#screenshots)
   - [API Endpoints](#api-endpoints)
-    - [`/api/fraud-data`](#apifraud-data)
-    - [`/api/fraud-action`](#apifraud-action)
-    - [`/api/fraud-trends`](#apifraud-trends)
   - [How to Run Locally](#how-to-run-locally)
 
 ## Problem Statement
