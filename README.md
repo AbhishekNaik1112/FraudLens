@@ -1,8 +1,11 @@
 
 # FRAUDLENS
 
+## Deployed Link - https://fraudlens.vercel.app/
+
 ## Table of Contents
 - [FRAUDLENS](#fraudlens)
+  - [Deployed Link - https://fraudlens.vercel.app/](#deployed-link---httpsfraudlensvercelapp)
   - [Table of Contents](#table-of-contents)
   - [Problem Statement](#problem-statement)
   - [Key Features](#key-features)
