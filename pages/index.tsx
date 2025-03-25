@@ -2,7 +2,7 @@
 import Head from "next/head"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Shield, Bell, TrendingUp, ArrowRight } from "lucide-react"
+import { Shield, Bell, TrendingUp } from "lucide-react"
 
 export default function Landing() {
   return (
