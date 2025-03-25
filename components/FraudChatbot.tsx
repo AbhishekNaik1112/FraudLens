@@ -32,6 +32,7 @@ export default function FraudChatbot() {
   const client = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_GROK_API,
     baseURL: 'https://api.x.ai/v1/chat/completions',
+    dangerouslyAllowBrowser: true,
   });
 
   // Fetch fraud data once when the component mounts
