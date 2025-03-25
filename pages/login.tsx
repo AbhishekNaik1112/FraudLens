@@ -47,39 +47,30 @@ export default function Login() {
   if (!mounted) return null;
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
+    e.preventDefault()
+    setIsLoading(true)
+    setError('')
+  
     try {
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        setAuthenticated(true);
-        if (rememberMe) {
-          localStorage.setItem('rememberedEmail', email);
-          localStorage.setItem('rememberMe', 'true');
-        } else {
-          localStorage.removeItem('rememberedEmail');
-          localStorage.removeItem('rememberMe');
-        }
-        router.push('/dashboard');
+      })
+  
+      if (res.ok) {
+        useAuthStore.getState().setAuthenticated(true) // Updates Zustand AND localStorage
+        router.push('/dashboard')
       } else {
-        setError(data.message);
+        setError('Invalid credentials')
       }
     } catch (err) {
-      console.error(err);
-      setError('An unexpected error occurred. Please try again.');
+      console.error(err)
+      setError('An error occurred')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <>

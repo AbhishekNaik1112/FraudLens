@@ -11,7 +11,7 @@ export interface RiskCount {
 }
 
 export const useRiskCount = (): { data: RiskCount | undefined; error: any } => {
-    console.log("hit");
+    // console.log("hit");
   const { data, error } = useSWR("/api/fraud-data", fetcher);
 
   if (!data) return { data: undefined, error };
@@ -35,7 +35,7 @@ export const useRiskCount = (): { data: RiskCount | undefined; error: any } => {
   calculateCounts(fraudulent_apps);
   calculateCounts(fraudulent_urls);
 
-  console.log({ totalAlerts, highRisk, mediumRisk, resolved });
+  // console.log({ totalAlerts, highRisk, mediumRisk, resolved });
 
   return { data: { totalAlerts, highRisk, mediumRisk, resolved }, error };
 };

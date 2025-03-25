@@ -16,22 +16,15 @@ import { useRiskCount } from "@/utils/riskCount"
 export default function Dashboard() {
   const router = useRouter()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-  useEffect(() => {
-    const storedAuth = localStorage.getItem("isAuthenticated")
-    if (storedAuth === "true") {
-      useAuthStore.setState({ isAuthenticated: true })
-    }
-  }, [])
-  const { data, error } = useRiskCount()
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login")
+      router.push('/login')
     }
   }, [isAuthenticated, router])
 
   if (!isAuthenticated) {
-    return null
+    return null // Optional: Show loading spinner
   }
 
   return (
