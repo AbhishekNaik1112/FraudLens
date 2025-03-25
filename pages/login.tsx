@@ -1,40 +1,37 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import Head from 'next/head'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Shield, LogIn, AlertCircle } from 'lucide-react'
-import useAuthStore from '@/store/authStore'
+import { CardFooter } from "@/components/ui/card"
+
+import type React from "react"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import Head from "next/head"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Shield, LogIn, AlertCircle } from "lucide-react"
+import useAuthStore from "@/store/authStore"
 
 export default function Login() {
   const router = useRouter()
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    const savedEmail = localStorage.getItem('rememberedEmail')
-    const savedRememberMe = localStorage.getItem('rememberMe') === 'true'
-    
+    const savedEmail = localStorage.getItem("rememberedEmail")
+    const savedRememberMe = localStorage.getItem("rememberMe") === "true"
+
     if (savedRememberMe && savedEmail) {
       setEmail(savedEmail)
       setRememberMe(true)
@@ -46,31 +43,31 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setError('')
+    setError("")
 
     try {
-      const res = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       })
 
       if (res.ok) {
         setAuthenticated(true)
         if (rememberMe) {
-          localStorage.setItem('rememberedEmail', email)
-          localStorage.setItem('rememberMe', 'true')
+          localStorage.setItem("rememberedEmail", email)
+          localStorage.setItem("rememberMe", "true")
         } else {
-          localStorage.removeItem('rememberedEmail')
-          localStorage.removeItem('rememberMe')
+          localStorage.removeItem("rememberedEmail")
+          localStorage.removeItem("rememberMe")
         }
-        router.push('/dashboard')
+        router.push("/dashboard")
       } else {
-        setError('Invalid credentials')
+        setError("Invalid credentials")
       }
     } catch (err) {
       console.error(err)
-      setError('An unexpected error occurred. Please try again.')
+      setError("An unexpected error occurred. Please try again.")
     } finally {
       setIsLoading(false)
     }
@@ -79,20 +76,20 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Login - FraudDetect</title>
-        <meta name="description" content="Login to your FraudDetect account" />
+        <title>Login - FraudLens</title>
+        <meta name="description" content="Login to your FraudLens account" />
       </Head>
       <div className="min-h-screen bg-slate-50 flex flex-col">
         <div className="flex items-center justify-between p-4 md:p-6">
           <Link href="/" legacyBehavior>
             <a className="flex items-center space-x-2">
               <Shield className="h-6 w-6 text-primary" />
-              <span className="text-lg font-bold text-primary">FraudDetect</span>
+              <span className="text-lg font-bold text-primary">FraudLens</span>
             </a>
           </Link>
           <Link href="/" legacyBehavior>
             <a
-              onClick={() => router.push('/')}
+              onClick={() => router.push("/")}
               className="text-sm text-slate-600 hover:text-primary transition-colors cursor-pointer"
             >
               Back to Home
@@ -108,12 +105,8 @@ export default function Login() {
                   <LogIn className="h-6 w-6 text-primary" />
                 </div>
               </div>
-              <CardTitle className="text-2xl font-bold text-center">
-                Login to your account
-              </CardTitle>
-              <CardDescription className="text-center">
-                Enter your credentials to access your dashboard
-              </CardDescription>
+              <CardTitle className="text-2xl font-bold text-center">Login to your account</CardTitle>
+              <CardDescription className="text-center">Enter your credentials to access your dashboard</CardDescription>
             </CardHeader>
             <CardContent>
               {error && (
@@ -166,7 +159,7 @@ export default function Login() {
                       Logging in...
                     </div>
                   ) : (
-                    'Login'
+                    "Login"
                   )}
                 </Button>
               </form>
@@ -198,10 +191,9 @@ export default function Login() {
           </Card>
         </div>
 
-        <footer className="py-6 text-center text-sm text-slate-500">
-          © 2025 FraudDetect. All rights reserved.
-        </footer>
+        <footer className="py-6 text-center text-sm text-slate-500">© 2025 FraudLens. All rights reserved.</footer>
       </div>
     </>
-  );
+  )
 }
+

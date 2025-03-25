@@ -13,6 +13,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BarChart3, PieChart, Shield, AlertTriangle, Activity } from "lucide-react"
 import { useRiskCount } from "@/utils/riskCount"
 
+// Add imports for our new components
+import FraudChatbot from "@/components/FraudChatbot"
+import AddFraudEntry from "@/components/AddFraudEntry"
+
 export default function Dashboard() {
   const router = useRouter()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
@@ -32,6 +36,7 @@ export default function Dashboard() {
     )
   }
 
+  // Update the return statement to include our new components
   return (
     <>
       <Head>
@@ -42,7 +47,10 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
             <h1 className="text-3xl font-bold text-slate-900">Fraud Monitoring Dashboard</h1>
-            <p className="text-sm text-slate-500">Last updated: {new Date().toLocaleString()}</p>
+            <div className="flex items-center gap-2 mt-4 md:mt-0">
+              <AddFraudEntry />
+              <p className="text-sm text-slate-500">Last updated: {new Date().toLocaleString()}</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -125,6 +133,11 @@ export default function Dashboard() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <FraudChatbot />
+            <TrendChart />
           </div>
 
           <Tabs defaultValue="fraud-list" className="mb-8">
