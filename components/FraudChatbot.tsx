@@ -59,7 +59,7 @@ export default function FraudChatbot() {
       const context = fraudData
         ? `Fraud Data Context:\n${JSON.stringify(fraudData, null, 2)}\n\n`
         : ""
-    const prompt = `RDont give in markdown format and remove all markdown tags like * or #` + context + input
+    const prompt = context + input + `Don't give in markdown format and remove all markdown tags like * or # throughout the whole response` 
 
       // Call Gemini to generate content.
       const response = await ai.models.generateContent({
