@@ -39,13 +39,13 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json())
 // Helper function to determine color based on intensity
 function getColor(value: number, alpha = 0.7) {
   // If above 15 use red; otherwise use green.
-  return value >= 10
+  return value > 10
     ? `rgba(255, 99, 132, ${alpha})`   // red shade
     : `rgba(75, 192, 192, ${alpha})`    // green shade
 }
 
 function getCardColor(value: number) {
-  return value >= 10
+  return value >   10
     ? { bg: "bg-red-50", border: "border-red-100", text: "text-red-600" }
     : { bg: "bg-green-50", border: "border-green-100", text: "text-green-600" }
 }

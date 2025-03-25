@@ -14,7 +14,6 @@ import { useRiskCount } from "@/utils/riskCount"
 
 // Add imports for our new components
 import FraudChatbot from "@/components/FraudChatbot"
-import AddFraudEntry from "@/components/AddFraudEntry"
 
 export default function Dashboard() {
   const router = useRouter()
@@ -47,7 +46,6 @@ export default function Dashboard() {
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
             <h1 className="text-3xl font-bold text-slate-900">Fraud Monitoring Dashboard</h1>
             <div className="flex items-center gap-2 mt-4 md:mt-0">
-              <AddFraudEntry />
               <p className="text-sm text-slate-500">Last updated: {new Date().toLocaleString()}</p>
             </div>
           </div>
