@@ -60,12 +60,6 @@ export default function Dashboard() {
                     <Shield className="h-6 w-6 text-blue-600" />
                   </div>
                 </div>
-                <div className="mt-4 flex items-center text-xs">
-                  <span className="text-green-600 font-medium flex items-center">
-                    <Activity className="h-3 w-3 mr-1" />
-                    +12% from last month
-                  </span>
-                </div>
               </CardContent>
             </Card>
 
@@ -79,12 +73,6 @@ export default function Dashboard() {
                   <div className="h-12 w-12 bg-red-100 rounded-full flex items-center justify-center">
                     <AlertTriangle className="h-6 w-6 text-red-600" />
                   </div>
-                </div>
-                <div className="mt-4 flex items-center text-xs">
-                  <span className="text-red-600 font-medium flex items-center">
-                    <Activity className="h-3 w-3 mr-1" />
-                    +8% from last month
-                  </span>
                 </div>
               </CardContent>
             </Card>
@@ -100,12 +88,6 @@ export default function Dashboard() {
                     <BarChart3 className="h-6 w-6 text-amber-600" />
                   </div>
                 </div>
-                <div className="mt-4 flex items-center text-xs">
-                  <span className="text-amber-600 font-medium flex items-center">
-                    <Activity className="h-3 w-3 mr-1" />
-                    +5% from last month
-                  </span>
-                </div>
               </CardContent>
             </Card>
 
@@ -119,12 +101,6 @@ export default function Dashboard() {
                   <div className="h-12 w-12 bg-green-100 rounded-full flex items-center justify-center">
                     <PieChart className="h-6 w-6 text-green-600" />
                   </div>
-                </div>
-                <div className="mt-4 flex items-center text-xs">
-                  <span className="text-green-600 font-medium flex items-center">
-                    <Activity className="h-3 w-3 mr-1" />
-                    +15% from last month
-                  </span>
                 </div>
               </CardContent>
             </Card>
