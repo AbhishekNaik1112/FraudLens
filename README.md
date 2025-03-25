@@ -34,7 +34,7 @@ Fraudulent apps and URLs pose significant security threats, leading to financial
 
 The Fraud Detection Dashboard is built using the following technologies:
 
-- **Frontend**: Next.js, ReactJS, Tailwind CSS for a user-friendly interface, Zustand for State Manaagement.
+- **Frontend**: Next.js, ReactJS, Tailwind CSS for a user-friendly interface, Zustand for State Manaagement, SWR for Realtime Changes.
 - **Backend**: Next.js server for handling authentication, API requests, and data processing.
 - **Database**: MongoDB for storing and fetching fraud-related data.
 
