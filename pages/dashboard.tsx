@@ -9,7 +9,7 @@ import FraudList from "@/components/FraudList"
 import TrendChart from "@/components/TrendChart"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BarChart3, PieChart, Shield, AlertTriangle, Activity } from "lucide-react"
+import { BarChart3, PieChart, Shield, AlertTriangle } from "lucide-react"
 import { useRiskCount } from "@/utils/riskCount"
 
 import FraudChatbot from "@/components/FraudChatbot"
