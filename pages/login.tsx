@@ -195,7 +195,7 @@ export default function Login() {
                     <div className="text-slate-700">
                       <span className="font-medium">Analyst:</span> analyst@fraudlens.com
                     </div>
-                    <div className="text-slate-500">password</div>
+                    <div className="text-slate-500">&nbsp;password</div>
                   </div>
                 </div>
               </div>
