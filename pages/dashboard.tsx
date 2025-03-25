@@ -16,6 +16,7 @@ import { useRiskCount } from "@/utils/riskCount"
 export default function Dashboard() {
   const router = useRouter()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const { data } = useRiskCount()
 
   useEffect(() => {
     if (!isAuthenticated) {
